@@ -1,0 +1,101 @@
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+class Expense {
+public:
+    string category;
+    float amount;
+    string date;
+
+    Expense(string cat, float amt, string dt) {
+        category = cat;
+        amount = amt;
+        date = dt;
+    }
+};
+
+class ExpenseTracker {
+private:
+    vector<Expense> expenses;
+
+public:
+    void addExpense() {
+        string category, date;
+        float amount;
+
+        cout << "Enter category: ";
+        cin.ignore();
+        getline(cin, category);
+        cout << "Enter amount: ";
+        cin >> amount;
+        cout << "Enter date (dd/mm/yyyy): ";
+        cin >> date;
+
+        expenses.push_back(Expense(category, amount, date));
+
+        cout << "Expense added successfully!" << endl;
+    }
+
+    void showExpense() {
+        if (expenses.empty()) {
+            cout << "No expenses recorded yet!" << endl;
+            return;
+        }
+
+        cout << "Expenses recorded:" << endl;
+        for (int i = 0; i < expenses.size(); i++) {
+            cout << "Category: " << expenses[i].category
+                 << ", Amount: " << expenses[i].amount
+                 << ", Date: " << expenses[i].date << endl;
+        }
+    }
+
+    void showTotalExpense() {
+        if (expenses.empty()) {
+            cout << "No expenses recorded yet!" << endl;
+            return;
+        }
+
+        float total = 0;
+        for (int i = 0; i < expenses.size(); i++) {
+            total += expenses[i].amount;
+        }
+        cout << "Total Expenses: " << total << endl;
+    }
+};
+
+int main() {
+    ExpenseTracker tracker;
+    int choice;
+
+    while (true) {
+        cout << "\nPersonal Expense Tracker\n";
+        cout << "1. Add Expense\n";
+        cout << "2. View Expenses\n";
+        cout << "3. View Total Expenses\n";
+        cout << "4. Exit\n";
+        cout << "Enter Your Choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                tracker.addExpense();
+                break;
+            case 2:
+                tracker.showExpense();
+                break;
+            case 3:
+                tracker.showTotalExpense();
+                break;
+            case 4:
+                cout << "Exiting the Program.." << endl;
+                return 0;
+            default:
+                cout << "Invalid Choice. Try Again.\n";
+                break;
+        }
+    }
+}
